@@ -8,9 +8,9 @@ const slides = [
     id: 1,
     image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=2000",
     kicker: "Trusted by 40,000+ homeowners",
-    title: "Find a tradie you can actually rely on",
-    subtitle: "Compare quotes from verified local professionals in minutes — no calling around, no guesswork.",
-    cta: "Find Your Tradie"
+    title: "Find a professional you can actually rely on",
+    subtitle: "Find verified local professionals in minutes — no calling around, no guesswork.",
+    cta: "Find a Professional"
   },
   {
     id: 2,
