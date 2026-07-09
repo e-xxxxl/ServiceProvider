@@ -4,9 +4,9 @@ import Navbar from "./components/Navbar/Navbar.jsx"
 import Hero from './components/Herosection/Hero.jsx';
 
 import { AuthProvider } from './context/AuthContext';
-import SignUp from './components/auth/SignUp';
-import Login from './components/auth/Login';
-import EmailVerification from './components/auth/EmailVerification';
+import SignUp from './components/Auth/SignUp';
+import Login from './components/Auth/Login';
+import EmailVerification from './components/Auth/EmailVerification.jsx';
 // import Dashboard from './components/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 
