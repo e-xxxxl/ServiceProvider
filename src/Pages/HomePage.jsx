@@ -1,13 +1,12 @@
-import React from 'react'
-import Navbar from '../components/Navbar/Navbar'
-import Hero from '../components/Herosection/Hero'
-import HowItWorks from '../components/Herosection/HowItworks'
-import FeaturedCategories from '../components/Herosection/Featuredcategories'
-import StatsBanner from '../components/Herosection/Statsbanner'
+import Faq from "../components/Faq/Faq"
+import Footer from "../components/Footer/Footer"
+import AboutUs from "../components/Herosection/AboutUs"
+import FeaturedCategories from "../components/Herosection/Featuredcategories"
+import Hero from "../components/Herosection/Hero"
+import HowItWorks from "../components/Herosection/Howitworks"
+import StatsBanner from "../components/Herosection/Statsbanner"
+import Navbar from "../components/Navbar/Navbar"
 
-import AboutUs from '../components/Herosection/AboutUs'
-import Footer from '../components/Footer/Footer'
-import FAQ from '../components/faq/faq'
 
 const HomePage = () => {
   return (
@@ -17,7 +16,7 @@ const HomePage = () => {
         <HowItWorks/>
              <FeaturedCategories/>
              <StatsBanner/>
-             <FAQ/>
+             <Faq/>
              <AboutUs/>
              <Footer/>  
 

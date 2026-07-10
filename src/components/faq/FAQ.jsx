@@ -56,7 +56,7 @@ const FAQItem = ({ faq, isOpen, onToggle }) => {
   );
 };
 
-const faq = () => {
+const Faq = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
@@ -86,4 +86,4 @@ const faq = () => {
   );
 };
 
-export default faq;
+export default Faq;
