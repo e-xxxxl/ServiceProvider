@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star, ArrowRight } from 'lucide-react';
 
-const popularServices = ['Plumbing', 'Electrical', 'Painting', 'Cleaning', 'Landscaping', 'Renovations'];
+const popularServices = ['Plumbing', 'Electrical', 'Cleaning', 'Tutoring', 'Photography', 'IT Support'];
 
 const slides = [
   {
     id: 1,
     image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=2000",
-    kicker: "Trusted by 40,000+ homeowners",
+    kicker: "Trusted by 40,000+ customers",
     title: "Find a professional you can actually rely on",
-    subtitle: "Find verified local professionals in minutes — no calling around, no guesswork.",
-    cta: "Find a Professional"
+    subtitle: "Search by category and location, browse real profiles, and message providers directly — no calling around.",
+    cta: "Search Professionals"
   },
   {
     id: 2,
     image: "https://images.unsplash.com/photo-1676210134188-4c05dd172f89?auto=format&fit=crop&q=80&w=2000",
-    kicker: "Licensed & insured plumbers",
+    kicker: "Licensed & verified plumbers",
     title: "Leaks and installs, handled properly",
-    subtitle: "From dripping taps to full bathroom re-plumbs, get matched with a licensed plumber near you.",
-    cta: "Get Plumbing Help"
+    subtitle: "From dripping taps to full bathroom re-plumbs, find a verified plumber near you and message them directly.",
+    cta: "Find a Plumber"
   },
   {
     id: 3,
     image: "https://images.unsplash.com/photo-1779031242515-205111711b23?auto=format&fit=crop&q=80&w=2000",
     kicker: "Custom builds & renovations",
     title: "Craftsmanship that lasts decades",
-    subtitle: "Vetted carpenters for renovations, built-ins, and repairs — real portfolios, real reviews.",
-    cta: "Start a Renovation"
+    subtitle: "Browse verified carpenters for renovations, built-ins, and repairs — real profiles, real reviews.",
+    cta: "Find a Carpenter"
   }
 ];
 
@@ -107,7 +107,16 @@ const Hero = () => {
                 <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
               </button>
 
-           
+              {/* Rating proof sits next to the CTA instead of a row of icon badges — reads as real product evidence, not decoration */}
+              {/* <div className="flex items-center gap-2 text-white/90 text-sm">
+                <div className="flex text-[#ffb02e]">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={15} fill="currentColor" strokeWidth={0} />
+                  ))}
+                </div>
+                <span className="font-semibold">4.8</span>
+                <span className="text-white/60">from 12,400 reviews</span>
+              </div> */}
             </div>
 
             {/* Popular services — wraps naturally so it never overflows;

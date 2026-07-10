@@ -16,93 +16,123 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
 
+  const API_URL = import.meta.env.VITE_API_URL || 'https://service-server-e64r.onrender.com/api';
+
+  // Check existing session
   useEffect(() => {
-    // Check for existing session
     const checkAuth = async () => {
       try {
         const token = localStorage.getItem('authToken');
-        if (token) {
-          // Verify token with backend
-          const response = await fetch('http://localhost:5000/api/auth/verify', {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          if (response.ok) {
-            const userData = await response.json();
-            setUser(userData);
-            setIsEmailVerified(userData.emailVerified);
-          } else {
-            localStorage.removeItem('authToken');
-          }
+        if (!token) {
+          setLoading(false);
+          return;
+        }
+
+        const response = await fetch(`${API_URL}/auth/verify`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          const userData = result.data || result.user || result;
+          setUser(userData);
+          setIsEmailVerified(userData?.isEmailVerified || false);
+        } else {
+          localStorage.removeItem('authToken');
         }
       } catch (error) {
         console.error('Auth check failed:', error);
+        localStorage.removeItem('authToken');
       } finally {
         setLoading(false);
       }
     };
+
     checkAuth();
   }, []);
 
-  const login = async (email, password) => {
-    const response = await fetch('http://localhost:5000/api/auth/login', {
+  const login = async (credentials) => {
+    console.log('Login attempt:', credentials.email);
+    
+    const response = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify(credentials),
     });
-    
+
+    const result = await response.json();
+    console.log('Login response:', result);
+
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message);
+      throw new Error(result.message || 'Invalid email or password');
     }
-    
-    const data = await response.json();
-    localStorage.setItem('authToken', data.token);
-    setUser(data.user);
-    setIsEmailVerified(data.user.emailVerified);
-    return data;
+
+    // Handle different response structures
+    const token = result.token || result.data?.token;
+    const userData = result.user || result.data?.user || result.data;
+
+    if (!token) {
+      console.error('No token in response:', result);
+      throw new Error('No token received from server');
+    }
+
+    localStorage.setItem('authToken', token);
+    setUser(userData);
+    setIsEmailVerified(userData?.isEmailVerified || false);
+
+    return result;
   };
 
   const signup = async (userData) => {
-    const response = await fetch('http://localhost:5000/api/auth/signup', {
+    const response = await fetch(`${API_URL}/auth/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData),
     });
-    
+
+    const result = await response.json();
+
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message);
+      throw new Error(result.message || 'Signup failed');
     }
-    
-    const data = await response.json();
-    return data; // Don't set token until email verified
+
+    return result;
   };
 
   const verifyEmail = async (token) => {
-    const response = await fetch(`http://localhost:5000/api/auth/verify-email/${token}`, {
+    const response = await fetch(`${API_URL}/auth/verify-email/${token}`, {
       method: 'POST',
     });
-    
+
+    const result = await response.json();
+
     if (!response.ok) {
-      throw new Error('Email verification failed');
+      throw new Error(result.message || 'Email verification failed');
     }
-    
-    const data = await response.json();
-    localStorage.setItem('authToken', data.token);
-    setUser(data.user);
-    setIsEmailVerified(true);
-    return data;
+
+    const accessToken = result.token || result.data?.token;
+    const userData = result.user || result.data?.user || result.data;
+
+    if (accessToken) {
+      localStorage.setItem('authToken', accessToken);
+      setUser(userData);
+      setIsEmailVerified(true);
+    }
+
+    return result;
   };
 
   const resendVerification = async (email) => {
-    const response = await fetch('http://localhost:5000/api/auth/resend-verification', {
+    const response = await fetch(`${API_URL}/auth/resend-verification`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email }),
     });
-    
+
+    const result = await response.json();
+
     if (!response.ok) {
-      throw new Error('Failed to resend verification email');
+      throw new Error(result.message || 'Failed to resend verification email');
     }
   };
 
